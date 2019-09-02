@@ -1,0 +1,89 @@
+<div :dark="darkMode" :class="$style.root">
+  <v-toolbar
+    clipped-left
+    absolute
+    dense
+    style="z-index: 5;"
+  >
+    <progress-bar :progress="busyPercent" />
+    <v-toolbar-side-icon
+      @click.native.stop="controlsDrawer = !controlsDrawer"
+    />
+    <!-- smaller than height of the toolbar -->
+    <svg-icon
+      :icon="iconLogo"
+      height="35px"
+    />
+    <v-spacer />
+    <action-modules :smallScreen="smallScreen" />
+    <v-btn
+      v-if="errors.length"
+      key="if-has-errors"
+      :class="$style.toolbarButton"
+      flat
+      color="error"
+      v-on:click="errorDialog = true"
+    >
+      <v-icon>{{ $vuetify.icons.pvLite.error }}</v-icon>
+      <span>{{ errors.length }}</span>
+      <span v-show="!smallScreen">error(s)</span>
+    </v-btn>
+    <v-btn
+      :class="$style.toolbarButton"
+      flat
+      v-on:click="aboutDialog = true"
+    >
+      <!-- width of other icons in toolbar -->
+      <svg-icon icon="kitware-logo" width="24px" />
+      <span v-show="!smallScreen">About</span>
+    </v-btn>
+  </v-toolbar>
+
+  <v-navigation-drawer
+    absolute
+    v-model="controlsDrawer"
+    :touchless="landingVisible"
+    clipped
+    mobile-break-point="960"
+    disable-resize-watcher
+    stateless
+  >
+    <controls-drawer style="margin-top: 48px;" />
+  </v-navigation-drawer>
+
+  <div :class="$style.appContent">
+    <layout-view />
+    <floating-lookup-table
+      v-for="floatingWindow in floatingLookupTables"
+      :key="floatingWindow.name"
+      :floatingWindow="floatingWindow"
+      :lookupTable="lookupTables[floatingWindow.name]"
+      :dataFields="dataFields"
+    />
+  </div>
+
+  <!-- browser issues -->
+  <browser-issues />
+
+  <!-- about dialog -->
+  <component
+    :is="dialogType"
+    v-model="aboutDialog"
+    max-width="50%"
+  >
+    <about-box v-on:close="aboutDialog = false" />
+  </component>
+
+  <!-- error dialog-->
+  <component
+    :is="dialogType"
+    v-model="errorDialog"
+    max-width="50%"
+  >
+    <error-box
+      :errors="errors"
+      v-on:close="errorDialog = false"
+      v-on:clear="errors = []"
+    />
+  </component>
+</div>

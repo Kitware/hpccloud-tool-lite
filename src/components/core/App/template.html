@@ -1,0 +1,12 @@
+<div :class="$style.container">
+  <paraview-lite v-if="connected && client" />
+  <div v-else>
+    <div v-if="canConnect">
+      Connecting to <b>{{ sessionURL }}</b>
+    </div>
+    <div v-else>
+      The job is not running. Please go back to the simulation view
+      <v-btn @click="goToSimulation">Go to Simulation</v-btn>
+    </div>
+  </div>
+</div>

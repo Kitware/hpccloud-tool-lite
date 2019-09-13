@@ -7,7 +7,9 @@
   /* need a fixed height of arbitrary value
    * so the vtk viewers don't grow too much in
    * height when resizing. */
-  height: 0;
+  position: relative;
+  top: 50px;
+  height: calc(100vh - 86px);
 }
 
 /* set vuetify-specific wrapper to contain our overlay */

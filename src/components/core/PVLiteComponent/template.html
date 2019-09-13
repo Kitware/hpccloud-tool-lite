@@ -51,7 +51,7 @@
     <controls-drawer style="margin-top: 48px;" />
   </v-navigation-drawer>
 
-  <div :class="$style.appContent">
+  <div :class="$style.appContent" :style="controlsDrawer ? 'margin-left: 300px':''">
     <layout-view />
     <floating-lookup-table
       v-for="floatingWindow in floatingLookupTables"

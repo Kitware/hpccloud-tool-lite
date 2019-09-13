@@ -17,6 +17,18 @@ function initialize($store) {
   if (!INITIALIZED) {
     INITIALIZED = true;
     $store.registerModule('ParaviewLite', ROOT_STATE);
+    $store.commit('PVL_COLOR_PRESET_NAMES_SET', [
+      'Cool to Warm',
+      'Cool to Warm (Extended)',
+      'Rainbow Desaturated',
+      'Cold and Hot',
+      'erdc_rainbow_bright',
+      '2hot',
+      'erdc_iceFire_H',
+      'erdc_iceFire_L',
+      'Inferno (matplotlib)',
+    ]);
+    registerModules($store);
   }
 }
 
@@ -137,18 +149,6 @@ export default {
         });
         this.$store.dispatch('PVL_APP_ROUTE_RUN');
         this.$store.dispatch('PVL_NETWORK_CONNECT');
-        this.$store.commit('PVL_COLOR_PRESET_NAMES_SET', [
-          'Cool to Warm',
-          'Cool to Warm (Extended)',
-          'Rainbow Desaturated',
-          'Cold and Hot',
-          'erdc_rainbow_bright',
-          '2hot',
-          'erdc_iceFire_H',
-          'erdc_iceFire_L',
-          'Inferno (matplotlib)',
-        ]);
-        registerModules(this.$store);
         this.connected = true;
       }
     },
